@@ -5,8 +5,7 @@
 #include "dsp.h"
 
 
-//CURRENT COMPILE COMMAND : gcc main.c main_menu.c point.c dsp.c -o main.exe -lraylib -lm
-
+//CURRENT COMPILE COMMAND : gcc main.c main_menu.c vector_math.c dsp.c -o main.exe -lraylib -lm
 int main(void)
 {
     // Initialization
@@ -101,7 +100,11 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
 
-    print_wave(curr_wave);
+    Vector2 start;
+    start.x = 0;
+    start.y = screenHeight/2.0f;
+
+    draw_wave(curr_wave, start);
 
     UnloadWave(curr_wave);
     
