@@ -27,7 +27,9 @@ int main(void)
     //Initialise Audio Device
     InitAudioDevice();
 
-    Wave curr_wave;
+    Wave curr_wave = LoadWave("sounds/spell.wav");
+    Sound curr_sound = LoadSoundFromWave(curr_wave);
+
     
 
     //--------------------------------------------------------------------------------------
@@ -55,11 +57,11 @@ int main(void)
 
         //Check which waveform to load
         if(mainmenu.play_music){
-            curr_wave = LoadWave("sounds/spell.wav");
-            printf("Sample rate: %d\n", curr_wave.sampleRate);
+            
+            PlaySound(curr_sound);
 
             if(IsAudioDeviceReady()){
-                printf("DEVICE READY");
+                printf("DEVICE READY\n");
             }
 
         } 
