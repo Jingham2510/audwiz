@@ -27,8 +27,8 @@ void InitMainMenu(MainMenu *menu, int screenWidth, int screenHeight){
     menu->screenWidth = screenWidth;
     menu->screenHeight = screenHeight;
     //Determine where the buttons should be drawn
-    menu->load_button_cntr.x = menu->screenWidth/2.0f;
-    menu->load_button_cntr.y = menu->screenHeight/2.0f;
+    menu->load_button_cntr.x = menu->screenWidth * 0.90f;
+    menu->load_button_cntr.y = menu->screenHeight *0.10f;
 
     menu->play_music = 0;
 
