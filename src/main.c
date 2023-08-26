@@ -2,9 +2,10 @@
 #include "main_menu.h"
 #include "menu_tools.h"
 #include <stdio.h>
+#include "dsp.h"
 
 
-//CURRENT COMPILE COMMAND : gcc main.c main_menu.c point.c -o main.exe -lraylib -lm
+//CURRENT COMPILE COMMAND : gcc main.c main_menu.c point.c dsp.c -o main.exe -lraylib -lm
 
 int main(void)
 {
@@ -98,6 +99,12 @@ int main(void)
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
+
+
+    print_wave(curr_wave);
+
+    UnloadWave(curr_wave);
+    
 
     return 0;
 }
