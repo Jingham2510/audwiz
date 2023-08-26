@@ -16,7 +16,7 @@ void DrawLoadButton(MainMenu *menu){
     const char* load_text = "LOAD";
     int load_font_size = menu->LOAD_BUTTON_SIZE/2;
     int load_text_length = MeasureText(load_text, load_font_size);
-    DrawText(load_text, menu->load_button_cntr.x - load_text_length/2, menu->load_button_cntr.y - load_font_size/2, load_font_size, BLACK);
+    DrawText(load_text, menu->load_button_cntr.x - load_text_length/2.0f, menu->load_button_cntr.y - load_font_size/2.0f, load_font_size, BLACK);
 
 
 }
@@ -27,8 +27,8 @@ void InitMainMenu(MainMenu *menu, int screenWidth, int screenHeight){
     menu->screenWidth = screenWidth;
     menu->screenHeight = screenHeight;
     //Determine where the buttons should be drawn
-    menu->load_button_cntr.x = menu->screenWidth/2;
-    menu->load_button_cntr.y = menu->screenHeight/2;
+    menu->load_button_cntr.x = menu->screenWidth/2.0f;
+    menu->load_button_cntr.y = menu->screenHeight/2.0f;
 
     menu->play_music = 0;
 
@@ -52,11 +52,8 @@ void MainMenuCheck(MainMenu *menu){
    
     
     //Get the mouse positive
-    Vector2 mousePos = GetMousePosition();
+    Vector2 mouse_pos = GetMousePosition();
     //Conversion from Vector 2 to my pnt type 
-    pnt mouse_pos;
-    mouse_pos.x = mousePos.x;
-    mouse_pos.y = mousePos.y;
 
     
     //LOAD BUTTON CHECK
@@ -80,16 +77,5 @@ void MainMenuCheck(MainMenu *menu){
 
 
 }
-
-
-void LoadButtonAction(){
-
-
-
-
-
-}
-
-
 
 

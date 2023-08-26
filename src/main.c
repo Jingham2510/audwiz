@@ -17,7 +17,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "AUD_WIZ");
 
     SetTargetFPS(60);               // Set the app to run at 60 frames-per-second
-      //Determining default menu
+    //Determining default menu
     enum menus curr_menu = MAIN;
 
     // SETUP MAIN MENU STRUCT

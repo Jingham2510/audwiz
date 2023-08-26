@@ -2,13 +2,13 @@
 #define MAIN_MENU_H
 
 #include "raylib.h"
-#include "point.h"
+#include "vector_math.h"
 typedef struct{
 
     int screenWidth;
     int screenHeight;
 
-    pnt load_button_cntr;
+    Vector2 load_button_cntr;
     int LOAD_BUTTON_SIZE;    
 
     bool play_music;
