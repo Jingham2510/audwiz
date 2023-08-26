@@ -15,6 +15,9 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "AUD_WIZ");
 
+    //Loads the EXCELLENT application image
+    SetWindowIcon(LoadImage("images/aud_wiz.png"));
+
     SetTargetFPS(60);               // Set the app to run at 60 frames-per-second
     //Determining default menu
     enum menus curr_menu = MAIN;
@@ -63,7 +66,7 @@ int main(void)
         if(mainmenu.play_music){            
             
             if(IsAudioDeviceReady()){
-                printf("DEVICE READY\n");
+                //printf("DEVICE READY\n");
                 PlaySound(curr_sound);
                 mainmenu.play_music = 0;
 
