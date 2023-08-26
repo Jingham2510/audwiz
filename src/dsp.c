@@ -61,13 +61,15 @@ void draw_wave(Wave wave, Vector2 start_point){
 
     for(int i =1; i < wave.frameCount; i++){
         
-        curr_vec.x = start_point.x + i/15.0f;
-        curr_vec.y = start_point.y + *(wave_samples + i);
+        curr_vec.x = start_point.x + i/80.0f;
+        curr_vec.y = (start_point.y + (*(wave_samples + i) * 250));
+
+
 
         vec_array[i] = curr_vec;
     }
 
-    
+    DrawLineStrip(vec_array, wave.frameCount, BLACK);
 
 }
 

@@ -30,6 +30,10 @@ int main(void)
     Wave curr_wave = LoadWave("sounds/spell.wav");
     Sound curr_sound = LoadSoundFromWave(curr_wave);
 
+    Vector2 wave_start;
+    wave_start.x = 0;
+    wave_start.y = screenHeight/2.0f;
+
     
 
     //--------------------------------------------------------------------------------------
@@ -62,6 +66,10 @@ int main(void)
                 printf("DEVICE READY\n");
                 PlaySound(curr_sound);
                 mainmenu.play_music = 0;
+
+               
+
+               
             }
 
         } 
@@ -82,6 +90,7 @@ int main(void)
             switch(curr_menu) {
                 case MAIN:
                     DrawMainMenu(&mainmenu);
+                    draw_wave(curr_wave, wave_start);
                     break;
 
                 default:
@@ -100,11 +109,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
 
-    Vector2 start;
-    start.x = 0;
-    start.y = screenHeight/2.0f;
-
-    draw_wave(curr_wave, start);
+   
 
     UnloadWave(curr_wave);
     
