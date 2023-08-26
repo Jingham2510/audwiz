@@ -56,12 +56,12 @@ int main(void)
         } 
 
         //Check which waveform to load
-        if(mainmenu.play_music){
+        if(mainmenu.play_music){            
             
-            PlaySound(curr_sound);
-
             if(IsAudioDeviceReady()){
                 printf("DEVICE READY\n");
+                PlaySound(curr_sound);
+                mainmenu.play_music = 0;
             }
 
         } 
