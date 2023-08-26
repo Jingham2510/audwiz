@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include<stdio.h>
 #include <string.h>
+#include "main_menu.h"
 #include"vector_math.h"
 #include"stdlib.h"
 
@@ -21,36 +22,12 @@ void print_wave(Wave wave){
 
 
 //Draws all the points of a wave 
-void draw_wave(Wave wave, Vector2 start_point){
+void draw_wave(Wave wave, Vector2 start_point, MainMenu menu){
 
-//TODO: Determine Starting Point X and Y 
-//Go through each point and determine where to draw it 
-//i.e. create a vector array by going through each frame and turning it into a vector
+//TODO: Figure out how to normalise wave so that it fits the full screen. (otherwise only certian length waves will fit)
 
     float *wave_samples = LoadWaveSamples(wave);
 
-
-    /* MALLOC VERSION
-    
-    Vector2 *vec_array = malloc(wave.frameCount * sizeof(float));
-
-    printf("memory initialised");
-
-    memcpy(vec_array, &start_point, sizeof(Vector2));
-
-    printf("First point loaded/n");
-
-    Vector2 curr_vec;
-
-    for(int i =1; i < wave.frameCount; i++){
-        
-        curr_vec.x = start_point.x + i;
-        curr_vec.y = start_point.y + *(wave_samples + i);
-
-        memcpy((vec_array + i*sizeof(Vector2)), &curr_vec, sizeof(Vector2));
-    }
-
-    */
 
 
     Vector2 vec_array[wave.frameCount];
@@ -60,8 +37,10 @@ void draw_wave(Wave wave, Vector2 start_point){
     Vector2 curr_vec;
 
     for(int i =1; i < wave.frameCount; i++){
+
+        //??????????
         
-        curr_vec.x = start_point.x + i/80.0f;
+        curr_vec.x = start_point.x + i*((menu.screenWidth/wave.frameCount));
         curr_vec.y = (start_point.y + (*(wave_samples + i) * 250));
 
 
