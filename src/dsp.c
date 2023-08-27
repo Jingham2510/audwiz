@@ -102,6 +102,8 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
 
     float *wave_samples = LoadWaveSamples(wave);
 
+    float *fft_wave;
+
     //Make sure that the number of frames is an equal number
     if(wave.frameCount % 2 != 0){
         //If an odd number, ignore the last frame
@@ -111,8 +113,35 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
         float *fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);   
     }
 
+    /*
+    //Iterate through each frame in the wave
+    for(int i = 0; i < wave.frameCount; i++){
+        printf("%d: %f\n", i, *(fft_wave + i));
+    }
+    */
      
-    
+    //Convert the floats to Vector points
+
+    Vector2 vec_array[wave.frameCount];
+
+    vec_array[0] = start_point;
+
+    Vector2 curr_vec;
+
+    for(int i = 1; i < wave.frameCount; i++){
+
+        //Fit waveform to window
+        
+        //Check pixel per frame is correct
+        //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
+
+        curr_vec.x = start_point.x + (i*((double) menu.screenWidth/ (double) wave.frameCount));
+        curr_vec.y = (start_point.y + (*(fft_wave + i)));
+
+        vec_array[i] = curr_vec;
+    }
+
+    DrawLineStrip(vec_array, wave.frameCount, BLACK);
 
 
 
