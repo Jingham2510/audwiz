@@ -71,7 +71,7 @@ float *cooley_tukey(float *x, int N ,int s){
         float * b_dft = cooley_tukey((x+s), N/2, 2*s);
 
         //Combine the DFTs into full DFT
-        for(int k = 0; k < N/2 -1; k++){
+        for(int k = 0; k < N/2 - 1; k++){
             //Access the float at space k in the "array"
             float p = *(a_dft + k);
             
@@ -81,6 +81,9 @@ float *cooley_tukey(float *x, int N ,int s){
             *(a_dft + k) = p + q;
 
             *(b_dft + k) = p - q;
+
+            //printf("a_dft: %f\n", *(a_dft + k));
+
         }
 
         float *comb_dft = malloc(N * sizeof(float));
@@ -102,46 +105,64 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
 
     float *wave_samples = LoadWaveSamples(wave);
 
-    float *fft_wave;
-
+    //TODO: Refactor to remove duplicate code - figure out how to "save" to fft_wave
+    
+    
+    
     //Make sure that the number of frames is an equal number
     if(wave.frameCount % 2 != 0){
         //If an odd number, ignore the last frame
         float *fft_wave = cooley_tukey(wave_samples, wave.frameCount - 1, 1);
+
+        Vector2 vec_array[wave.frameCount];
+
+        vec_array[0] = start_point;
+
+        Vector2 curr_vec;
+
+        for(int i = 1; i < wave.frameCount; i++){
+
+            //Fit waveform to window
+            
+            //Check pixel per frame is correct
+            //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
+
+            curr_vec.x = start_point.x + (i*((double) menu.screenWidth/ (double) wave.frameCount));
+            curr_vec.y = (start_point.y + (*(fft_wave + i)));
+
+            vec_array[i] = curr_vec;
+        }
+
+        DrawLineStrip(vec_array, wave.frameCount, BLACK);
+        
     }
     else{
-        float *fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);   
-    }
+        float *fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);
 
-    /*
-    //Iterate through each frame in the wave
-    for(int i = 0; i < wave.frameCount; i++){
-        printf("%d: %f\n", i, *(fft_wave + i));
-    }
-    */
-     
-    //Convert the floats to Vector points
+        Vector2 vec_array[wave.frameCount];
 
-    Vector2 vec_array[wave.frameCount];
+        vec_array[0] = start_point;
 
-    vec_array[0] = start_point;
+        Vector2 curr_vec;
 
-    Vector2 curr_vec;
+        for(int i = 1; i < wave.frameCount; i++){
 
-    for(int i = 1; i < wave.frameCount; i++){
+            //Fit waveform to window
+            
+            //Check pixel per frame is correct
+            //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
 
-        //Fit waveform to window
-        
-        //Check pixel per frame is correct
-        //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
+            curr_vec.x = start_point.x + (i*((double) menu.screenWidth/ (double) wave.frameCount));
+            curr_vec.y = (start_point.y + (*(fft_wave + i)));
 
-        curr_vec.x = start_point.x + (i*((double) menu.screenWidth/ (double) wave.frameCount));
-        curr_vec.y = (start_point.y + (*(fft_wave + i)));
+            vec_array[i] = curr_vec;
+        }
 
-        vec_array[i] = curr_vec;
-    }
+        DrawLineStrip(vec_array, wave.frameCount, BLACK);   
+        }
 
-    DrawLineStrip(vec_array, wave.frameCount, BLACK);
+    
+
 
 
 
