@@ -134,6 +134,7 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
         }
 
         DrawLineStrip(vec_array, wave.frameCount, BLACK);
+
         
     }
     else{
