@@ -23,10 +23,10 @@ int main(void)
     enum menus curr_menu = MAIN;
 
     // SETUP MAIN MENU STRUCT
-    MainMenu mainmenu;
-    InitMainMenu(&mainmenu, screenWidth, screenHeight);
+    MainMenu main_menu;
+    InitMainMenu(&main_menu, screenWidth, screenHeight);
 
-    //
+    
     //Initialise Audio Device
     InitAudioDevice();
 
@@ -55,7 +55,7 @@ int main(void)
         if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
             switch(curr_menu){
                 case MAIN:
-                    MainMenuCheck(&mainmenu);
+                    MainMenuCheck(&main_menu);
                     break;
                 default:
                     break;
@@ -63,12 +63,12 @@ int main(void)
         } 
 
         //Check which waveform to load
-        if(mainmenu.play_music){            
+        if(main_menu.play_music){            
             
             if(IsAudioDeviceReady()){
                 //printf("DEVICE READY\n");
                 PlaySound(curr_sound);
-                mainmenu.play_music = 0;
+                main_menu.play_music = 0;
 
                
 
@@ -92,12 +92,12 @@ int main(void)
 
             switch(curr_menu) {
                 case MAIN:
-                    DrawMainMenu(&mainmenu);
-                    draw_wave(curr_wave, wave_start);
+                    DrawMainMenu(&main_menu);
+                    draw_wave(curr_wave, wave_start, main_menu);
                     break;
 
                 default:
-                    DrawMainMenu(&mainmenu);
+                    DrawMainMenu(&main_menu);
                     break;
             }
         

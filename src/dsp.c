@@ -36,11 +36,14 @@ void draw_wave(Wave wave, Vector2 start_point, MainMenu menu){
 
     Vector2 curr_vec;
 
-    for(int i =1; i < wave.frameCount; i++){
+    for(int i = 1; i < wave.frameCount; i++){
 
-        //??????????
+        //Fit waveform to window
         
-        curr_vec.x = start_point.x + i*((menu.screenWidth/wave.frameCount));
+        //Check pixel per frame is correct
+        //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
+
+        curr_vec.x = start_point.x + (i*((double) menu.screenWidth/ (double) wave.frameCount));
         curr_vec.y = (start_point.y + (*(wave_samples + i) * 250));
 
 
