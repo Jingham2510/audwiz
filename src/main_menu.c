@@ -46,10 +46,10 @@ void InitMainMenu(MainMenu *menu, int screenWidth, int screenHeight){
     
 
     menu->play_music = 0;
-
     menu->display_wave = 0;
+    menu->wave_points_calced = 0;
     
-
+    menu->wave_points = NULL;
 
 
 }
@@ -79,13 +79,15 @@ void MainMenuCheck(MainMenu *menu){
         menu->play_music = 1; 
         menu->display_wave = 1;
         menu->wave_m = TIME_MODE;
+        menu->wave_points_calced = 0;
    }
 
     else if(PointDistance(mouse_pos, menu->freq_button_cntr) < menu->LOAD_BUTTON_SIZE){
             
             menu->play_music = 1; 
             menu->display_wave = 1;
-            menu->wave_m = FREQ_MODE;        
+            menu->wave_m = FREQ_MODE;    
+            menu->wave_points_calced = 0;    
     }
 
     else{

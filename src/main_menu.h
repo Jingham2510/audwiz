@@ -25,6 +25,10 @@ typedef struct{
     enum wave_mode wave_m;
 
 
+    bool wave_points_calced;
+    Vector2 *wave_points;
+
+
 } MainMenu;
 
 
