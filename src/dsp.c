@@ -4,7 +4,8 @@
 #include "main_menu.h"
 #include"vector_math.h"
 #include"stdlib.h"
-
+#include<complex.h>
+#include<math.h>
 
 //Prints out a waves sample
 void print_wave(Wave wave){
@@ -54,15 +55,68 @@ void draw_twave(Wave wave, Vector2 start_point, MainMenu menu){
 }
 
 
-void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
 
-    float *wave_samples = LoadWaveSamples(wave);
+//FFT algorithm 
+//Adapted from the psuedocode at: https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
+//x is the input array, N is the number of samples ,s is the stride of the input array
+//Sort of like a divide and conquer method
+float *cooley_tukey(float *x, int N ,int s){
+    //Trivial 1 frame DFT
+    if(N==1){
+        return x;
+    }
+    else{
+        //Split the float array in half - recursive
+        float * a_dft = cooley_tukey(x, N/2, 2*s);
+        float * b_dft = cooley_tukey((x+s), N/2, 2*s);
 
+        //Combine the DFTs into full DFT
+        for(int k = 0; k < N/2 -1; k++){
+            //Access the float at space k in the "array"
+            float p = *(a_dft + k);
+            
+            //Exponential of (-2pi*(i) divided by N all multiplied by k) multiplied by the relevant dfted frame. 
+            float q = exp(((-2 * PI * I)/N) * k) * *(b_dft + k);
 
+            *(a_dft + k) = p + q;
+
+            *(b_dft + k) = p - q;
+        }
+
+        float *comb_dft = malloc(N * sizeof(float));
+
+        memcpy(comb_dft, a_dft, N/2 * sizeof(float));
+        memcpy(comb_dft + N/2, b_dft, N/2 * sizeof(float));
+
+        return comb_dft;
+
+    }
 
 
 }
 
+
+
+
+void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
+
+    float *wave_samples = LoadWaveSamples(wave);
+
+    //Make sure that the number of frames is an equal number
+    if(wave.frameCount % 2 != 0){
+        //If an odd number, ignore the last frame
+        float *fft_wave = cooley_tukey(wave_samples, wave.frameCount - 1, 1);
+    }
+    else{
+        float *fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);   
+    }
+
+     
+    
+
+
+
+}
 
 
 
