@@ -11,9 +11,11 @@
 //Prints out a waves samples 
 void print_wave(Wave wave);
 
-//Draws a given wave
+//Draws a given wave in the time domain
 //Starts at the given point, assuming that is 0,0 of the wave
-void draw_wave(Wave wave, Vector2 start_point, MainMenu menu);
+void draw_twave(Wave wave, Vector2 start_point, MainMenu menu);
+
+void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu);
 
 
 #endif

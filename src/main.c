@@ -93,7 +93,16 @@ int main(void)
             switch(curr_menu) {
                 case MAIN:
                     DrawMainMenu(&main_menu);
-                    draw_wave(curr_wave, wave_start, main_menu);
+                    
+                    if(main_menu.display_wave){
+                        if(main_menu.wave_m == TIME_MODE){
+                            draw_twave(curr_wave, wave_start, main_menu);
+                        }
+                        else if(main_menu.wave_m == FREQ_MODE){
+                            draw_fwave(curr_wave, wave_start, main_menu);
+                        }
+                    }
+                    
                     break;
 
                 default:

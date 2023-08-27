@@ -3,18 +3,32 @@
 
 #include "raylib.h"
 #include "vector_math.h"
+
+enum wave_mode{
+
+    TIME_MODE = 0,
+    FREQ_MODE = 1
+};
+
 typedef struct{
 
     int screenWidth;
     int screenHeight;
 
-    Vector2 load_button_cntr;
+    Vector2 time_button_cntr;
+    Vector2 freq_button_cntr;
     int LOAD_BUTTON_SIZE;    
 
     bool play_music;
+    bool display_wave;
+
+    enum wave_mode wave_m;
 
 
 } MainMenu;
+
+
+
 
 //Initialises all the main menu variables
 void InitMainMenu(MainMenu *menu,  int screenWidth, int screenHeight);

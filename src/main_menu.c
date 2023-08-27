@@ -5,18 +5,29 @@
 
 
 
-void DrawLoadButton(MainMenu *menu){
+void DrawTimeButton(MainMenu *menu){
     //Draws Load WAV button
     
     
     menu->LOAD_BUTTON_SIZE = 50;
-
-    int LOAD_BUTTON_SIZE = 50;
-    DrawCircleLines(menu->load_button_cntr.x, menu->load_button_cntr.y, menu->LOAD_BUTTON_SIZE, BLACK);
-    const char* load_text = "LOAD";
+    
+    DrawCircleLines(menu->time_button_cntr.x, menu->time_button_cntr.y, menu->LOAD_BUTTON_SIZE, BLACK);
+    const char* time_text = "TIME";
     int load_font_size = menu->LOAD_BUTTON_SIZE/2;
-    int load_text_length = MeasureText(load_text, load_font_size);
-    DrawText(load_text, menu->load_button_cntr.x - load_text_length/2.0f, menu->load_button_cntr.y - load_font_size/2.0f, load_font_size, BLACK);
+    int load_text_length = MeasureText(time_text, load_font_size);
+    DrawText(time_text, menu->time_button_cntr.x - load_text_length/2.0f, menu->time_button_cntr.y - load_font_size/2.0f, load_font_size, BLACK);
+
+
+}
+
+void DrawFreqButton(MainMenu *menu){
+
+    DrawCircleLines(menu->freq_button_cntr.x, menu->freq_button_cntr.y, menu->LOAD_BUTTON_SIZE, BLACK);
+    const char* freq_text = "FREQ";
+    int load_font_size = menu->LOAD_BUTTON_SIZE/2;
+    int load_text_length = MeasureText(freq_text, load_font_size);
+    DrawText(freq_text, menu->freq_button_cntr.x - load_text_length/2.0f, menu->freq_button_cntr.y - load_font_size/2.0f, load_font_size, BLACK);
+
 
 
 }
@@ -27,11 +38,16 @@ void InitMainMenu(MainMenu *menu, int screenWidth, int screenHeight){
     menu->screenWidth = screenWidth;
     menu->screenHeight = screenHeight;
     //Determine where the buttons should be drawn
-    menu->load_button_cntr.x = menu->screenWidth * 0.90f;
-    menu->load_button_cntr.y = menu->screenHeight *0.10f;
+    menu->time_button_cntr.x = menu->screenWidth * 0.75f;
+    menu->time_button_cntr.y = menu->screenHeight *0.10f;
+
+    menu->freq_button_cntr.x = menu->screenWidth * 0.90f;
+    menu->freq_button_cntr.y = menu->screenHeight *0.10f;
+    
 
     menu->play_music = 0;
 
+    menu->display_wave = 0;
     
 
 
@@ -43,8 +59,8 @@ void InitMainMenu(MainMenu *menu, int screenWidth, int screenHeight){
 void DrawMainMenu(MainMenu *menu){
 
       
-    DrawLoadButton(menu);
-   
+    DrawTimeButton(menu);
+    DrawFreqButton(menu);   
 }
 
 //Checks where a left click is on the main menu
@@ -57,25 +73,25 @@ void MainMenuCheck(MainMenu *menu){
 
     
     //LOAD BUTTON CHECK
-    if(PointDistance(mouse_pos, menu->load_button_cntr) < menu->LOAD_BUTTON_SIZE){
+    if(PointDistance(mouse_pos, menu->time_button_cntr) < menu->LOAD_BUTTON_SIZE){
         
-        menu->play_music = 1;           
+        
+        menu->play_music = 1; 
+        menu->display_wave = 1;
+        menu->wave_m = TIME_MODE;
+   }
 
+    else if(PointDistance(mouse_pos, menu->freq_button_cntr) < menu->LOAD_BUTTON_SIZE){
+            
+            menu->play_music = 1; 
+            menu->display_wave = 1;
+            menu->wave_m = FREQ_MODE;        
     }
 
     else{
-        menu->play_music = 0;        
+        menu->play_music = 0;
+        menu->display_wave = 0;        
     }
-        
-
-    
-
-
-
-    
-
-
-
 }
 
 

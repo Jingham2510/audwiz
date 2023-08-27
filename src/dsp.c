@@ -22,13 +22,11 @@ void print_wave(Wave wave){
 
 
 //Draws all the points of a wave 
-void draw_wave(Wave wave, Vector2 start_point, MainMenu menu){
+void draw_twave(Wave wave, Vector2 start_point, MainMenu menu){
 
 //TODO: Figure out how to normalise wave so that it fits the full screen. (otherwise only certian length waves will fit)
 
     float *wave_samples = LoadWaveSamples(wave);
-
-
 
     Vector2 vec_array[wave.frameCount];
 
@@ -52,6 +50,16 @@ void draw_wave(Wave wave, Vector2 start_point, MainMenu menu){
     }
 
     DrawLineStrip(vec_array, wave.frameCount, BLACK);
+
+}
+
+
+void draw_fwave(Wave wave, Vector2 start_point, MainMenu menu){
+
+    float *wave_samples = LoadWaveSamples(wave);
+
+
+
 
 }
 
