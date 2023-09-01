@@ -50,8 +50,8 @@ void draw_twave(Wave wave, Vector2 start_point, MainMenu *menu){
             vec_array[i] = curr_vec;
         }
 
-        menu->wave_points = vec_array;
-
+        memcpy(menu->wave_points, vec_array, sizeof(vec_array));
+        menu->wave_points_calced = 1;
 
     }
 
@@ -93,11 +93,16 @@ float *cooley_tukey(float *x, int N ,int s){
 
         }
 
+        //Combine the DFT arrays into one DFT
         float *comb_dft = malloc(N * sizeof(float));
 
+        //OLD VERSION OF COMBINATION - Doesnt put them in alternating order, just one after the other
         memcpy(comb_dft, a_dft, N/2 * sizeof(float));
         memcpy(comb_dft + N/2, b_dft, N/2 * sizeof(float));
-        
+
+
+
+
 
         return comb_dft;
 
@@ -117,9 +122,7 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
 
         float *wave_samples = LoadWaveSamples(wave);
 
-        //TODO: Refactor to remove duplicate code - figure out how to "save" to fft_wave
-        
-        
+        //TODO: Refactor to remove duplicate code - figure out how to "save" to fft_wave        
         
         //Make sure that the number of frames is an equal number
         if(wave.frameCount % 2 != 0){
@@ -148,7 +151,8 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
                 vec_array[i] = curr_vec;
             }
 
-            menu->wave_points = vec_array;
+            
+            memcpy(menu->wave_points, vec_array, sizeof(vec_array));
             menu->wave_points_calced = 1;
             
 
@@ -175,7 +179,7 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
                 vec_array[i] = curr_vec;
             }
 
-            menu->wave_points = vec_array;
+            memcpy(menu->wave_points, vec_array, sizeof(vec_array));
             menu->wave_points_calced = 1;
 
              

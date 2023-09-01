@@ -68,9 +68,7 @@ int main(void)
             if(IsAudioDeviceReady()){
                 //printf("DEVICE READY\n");
                 PlaySound(curr_sound);
-                main_menu.play_music = 0;
-
-               
+                main_menu.play_music = 0;   
 
                
             }
