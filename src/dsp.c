@@ -141,74 +141,42 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
 
         //TODO: Refactor to remove duplicate code - figure out how to "save" to fft_wave        
         
+        float *fft_wave = malloc(wave.frameCount * sizeof(float));
+
         //Make sure that the number of frames is an equal number
-        if(wave.frameCount % 2 != 0){
-            
-            
+        if(wave.frameCount % 2 != 0){       
 
             //If an odd number, ignore the last frame
-            float *fft_wave = cooley_tukey(wave_samples, wave.frameCount - 1, 1);
-
-            Vector2 vec_array[wave.frameCount];
-
-            vec_array[0] = start_point;
-
-            Vector2 curr_vec;
-
-            for(int i = 1; i < wave.frameCount; i++){
-
-                //Fit waveform to window
-                
-                //Check pixel per frame is correct
-                //printf("Pixels per frame: %f\n", (float) menu.screenWidth/wave.frameCount);
-
-                curr_vec.x = start_point.x + (i*((double) menu->screenWidth/ (double) wave.frameCount));
-                curr_vec.y = (start_point.y + (*(fft_wave + i)));
-
-                vec_array[i] = curr_vec;
-            }
-
-            
-            memcpy(menu->wave_points, vec_array, sizeof(vec_array));
-            menu->wave_points_calced = 1;
-            
-
-                        
+            fft_wave = cooley_tukey(wave_samples, wave.frameCount - 1, 1);
+                   
         }
         else{
-            float *fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);
+            fft_wave = cooley_tukey(wave_samples, wave.frameCount, 1);
+        }
 
-            Vector2 vec_array[wave.frameCount];
+        Vector2 vec_array[wave.frameCount];
 
-            vec_array[0] = start_point;
+        vec_array[0] = start_point;
 
-            Vector2 curr_vec;
+        Vector2 curr_vec;
 
-            for(int i = 1; i < wave.frameCount; i++){
+        for(int i = 1; i < wave.frameCount; i++){
 
-                //Fit waveform to window
-                
-                //Check pixel per frame is correct
+            //Fit waveform to window
+            curr_vec.x = start_point.x + (i*((double) menu->screenWidth/ (double) wave.frameCount));
+            curr_vec.y = (start_point.y + (*(fft_wave + i)));
 
-                curr_vec.x = start_point.x + (i*((double) menu->screenWidth/ (double) wave.frameCount));
-                curr_vec.y = (start_point.y + (*(fft_wave + i)));
+            vec_array[i] = curr_vec;
+        }
 
-                vec_array[i] = curr_vec;
-            }
-
-            memcpy(menu->wave_points, vec_array, sizeof(vec_array));
-            menu->wave_points_calced = 1;
-
-             
-            }
+        
+        memcpy(menu->wave_points, vec_array, sizeof(vec_array));
+        menu->wave_points_calced = 1;   
 
     
     }
-
+    
     DrawLineStrip(menu->wave_points, wave.frameCount, BLACK);  
-
-
-
 }
 
 
