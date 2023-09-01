@@ -30,7 +30,7 @@ int main(void)
     //Initialise Audio Device
     InitAudioDevice();
 
-    Wave curr_wave = LoadWave("sounds/spell.wav");
+    Wave curr_wave = LoadWave("sounds/440_hz.wav");
     Sound curr_sound = LoadSoundFromWave(curr_wave);
 
     Vector2 wave_start;

@@ -94,10 +94,27 @@ float *cooley_tukey(float *x, int N ,int s){
         //Combine the DFT arrays into one DFT
         float *comb_dft = malloc(N * sizeof(float));
 
+        int a_cnt = 0;
+        int b_cnt = 0;
+
+        //Interlace the two arrays with one-another
+        for(int i = 0; i < N; i++){
+
+            if(i % 2 == 0){
+                *(comb_dft + i) = *(a_dft + a_cnt);
+                a_cnt++;
+            }
+            else{
+                *(comb_dft + i) = *(b_dft + b_cnt);
+                b_cnt++;
+            }
+        }
+
+        /*
         //OLD VERSION OF COMBINATION - Doesnt put them in alternating order, just one after the other
         memcpy(comb_dft, a_dft, N/2 * sizeof(float));
         memcpy(comb_dft + N/2, b_dft, N/2 * sizeof(float));
-
+        */
         
 
 
