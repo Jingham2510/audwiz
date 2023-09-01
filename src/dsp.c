@@ -87,9 +87,7 @@ float *cooley_tukey(float *x, int N ,int s){
             
             *(a_dft + k) = p + q;
             
-            *(b_dft + k) = p - q;
-
-            //printf("a_dft: %f\n", *(a_dft + k));
+            *(b_dft + k) = p - q;           
 
         }
 
@@ -99,6 +97,8 @@ float *cooley_tukey(float *x, int N ,int s){
         //OLD VERSION OF COMBINATION - Doesnt put them in alternating order, just one after the other
         memcpy(comb_dft, a_dft, N/2 * sizeof(float));
         memcpy(comb_dft + N/2, b_dft, N/2 * sizeof(float));
+
+        
 
 
 
