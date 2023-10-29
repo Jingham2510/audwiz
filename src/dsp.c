@@ -69,44 +69,32 @@ void draw_twave(Wave wave, Vector2 start_point, MainMenu *menu){
 //Sort of like a divide and conquer method
 float *cooley_tukey(float *x, int N ,int s){   
     
-      float *comb_dft = malloc(N * sizeof(float));
+    float *comb_dft = malloc(N * sizeof(float));
 
     //Trivial 1 frame DFT
     if(N==1){
-        return x;
-    }
-      
-
-    float *a_dft = malloc(N/2 * sizeof(float));
-    float *b_dft = malloc(N/2 * sizeof(float));
-
-
-    //Split the float array in half - recursive
-    for(int k = 0; k <N/2; k++){
-        a_dft[k] = x[2*k];
-        b_dft[k] = x[2*k +1];
+        comb_dft[0] = x[0];
+        return comb_dft;
     }
 
-
-    float *A_dft = cooley_tukey(a_dft, N/2, 2*s);
-    float *B_dft  = cooley_tukey(b_dft, N/2, 2*s);
-
-    free(a_dft);
-    free(b_dft);
+    float *a_dft = cooley_tukey(x, N/2, 2*s);
+    float *b_dft = cooley_tukey((x+s), N/2, 2*s);
 
     //Combine the DFTs into full DFT
     for(int k = 0; k < N/2 - 1; k++){
         //Access the float at space k in the "array"
-        float p = *(A_dft + k);
+        float p = a_dft[k];
         
         //Exponential of (-2pi*(i) divided by N all multiplied by k) multiplied by the relevant dfted frame. 
-        float q = exp(((-2 * PI * I)/N) * k) * *(B_dft + k);
+        float q = exp(((-2 * PI * I)/N) * k) * b_dft[k];
         
         comb_dft[k] = p + q;
         
         comb_dft[k + N/2] = p - q;
     }          
 
+    free(a_dft);
+    free(b_dft);
 
     
     return comb_dft;   
