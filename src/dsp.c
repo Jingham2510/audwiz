@@ -164,7 +164,7 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
 
             //Fit waveform to window
             curr_vec.x = start_point.x + (i*((double) menu->screenWidth/ (double) wave.frameCount));
-            curr_vec.y = (start_point.y + (*(fft_wave + i) / 5));
+            curr_vec.y = (start_point.y + (*(fft_wave + i)));
 
             
             vec_array[i] = curr_vec;
