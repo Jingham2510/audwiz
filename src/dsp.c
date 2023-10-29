@@ -82,15 +82,13 @@ float *cooley_tukey(float *x, int N ,int s){
 
     //Combine the DFTs into full DFT
     for(int k = 0; k < N/2 - 1; k++){
-        //Access the float at space k in the "array"
-        float p = a_dft[k];
-        
         //Exponential of (-2pi*(i) divided by N all multiplied by k) multiplied by the relevant dfted frame. 
-        float q = exp(((-2 * PI * I)/N) * k) * b_dft[k];
+        //Proffesionally called twiddling by a twiddle factor
+        float q = exp(((-2 * PI * I)/N) * k) * b_dft[k];       
+
+        comb_dft[k] = a_dft[k] + q;
         
-        comb_dft[k] = p + q;
-        
-        comb_dft[k + N/2] = p - q;
+        comb_dft[k + N/2] = a_dft[k] - q;
     }          
 
     free(a_dft);
