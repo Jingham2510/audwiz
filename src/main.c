@@ -5,7 +5,7 @@
 #include "dsp.h"
 
 
-//CURRENT COMPILE COMMAND : gcc main.c main_menu.c vector_math.c dsp.c -o main.exe -lraylib -lm
+//CURRENT COMPILE COMMAND : gcc main.c main_menu.c vector_math.c dsp.c debug_tools.c -o main.exe -lraylib -lm -g 
 int main(void)
 {
     // Initialization
@@ -30,7 +30,7 @@ int main(void)
     //Initialise Audio Device
     InitAudioDevice();
 
-    Wave curr_wave = LoadWave("sounds/440_hz.wav");
+    Wave curr_wave = LoadWave("sounds/spell.wav");
     Sound curr_sound = LoadSoundFromWave(curr_wave);
 
     Vector2 wave_start;

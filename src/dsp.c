@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include<stdio.h>
 #include <string.h>
+#include "debug_tools.h"
 #include "main_menu.h"
 #include"vector_math.h"
 #include"stdlib.h"
@@ -55,6 +56,7 @@ void draw_twave(Wave wave, Vector2 start_point, MainMenu *menu){
 
     }
 
+    
     DrawLineStrip(menu->wave_points, wave.frameCount, BLACK);
 
 }
@@ -137,9 +139,7 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
     if(menu->wave_points_calced == 0){
 
 
-        float *wave_samples = LoadWaveSamples(wave);
-
-        //TODO: Refactor to remove duplicate code - figure out how to "save" to fft_wave        
+        float *wave_samples = LoadWaveSamples(wave);   
         
         float *fft_wave = malloc(wave.frameCount * sizeof(float));
 
@@ -164,17 +164,24 @@ void draw_fwave(Wave wave, Vector2 start_point, MainMenu *menu){
 
             //Fit waveform to window
             curr_vec.x = start_point.x + (i*((double) menu->screenWidth/ (double) wave.frameCount));
-            curr_vec.y = (start_point.y + (*(fft_wave + i)));
+            curr_vec.y = (start_point.y + (*(fft_wave + i) / 5));
 
+            
             vec_array[i] = curr_vec;
         }
 
         
+        log_points(vec_array, sizeof(vec_array));
+
         memcpy(menu->wave_points, vec_array, sizeof(vec_array));
         menu->wave_points_calced = 1;   
 
     
     }
+
+    //printf("Wave count: %d", wave.frameCount);
+
+    
     
     DrawLineStrip(menu->wave_points, wave.frameCount, BLACK);  
 }
