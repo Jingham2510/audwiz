@@ -77,22 +77,36 @@ float *cooley_tukey(float *x, int N ,int s){
     }
       
 
+    float *a_dft = malloc(N/2 * sizeof(float));
+    float *b_dft = malloc(N/2 * sizeof(float));
+
+
     //Split the float array in half - recursive
-    float *a_dft = cooley_tukey(x, N/2, 2*s);
-    float *b_dft = cooley_tukey((x+s), N/2, 2*s);
+    for(int k = 0; k <N/2; k++){
+        a_dft[k] = x[2*k];
+        b_dft[k] = x[2*k +1];
+    }
+
+
+    float *A_dft = cooley_tukey(a_dft, N/2, 2*s);
+    float *B_dft  = cooley_tukey(b_dft, N/2, 2*s);
+
+    free(a_dft);
+    free(b_dft);
 
     //Combine the DFTs into full DFT
     for(int k = 0; k < N/2 - 1; k++){
         //Access the float at space k in the "array"
-        float p = *(a_dft + k);
+        float p = *(A_dft + k);
         
         //Exponential of (-2pi*(i) divided by N all multiplied by k) multiplied by the relevant dfted frame. 
-        float q = exp(((-2 * PI * I)/N) * k) * *(b_dft + k);
+        float q = exp(((-2 * PI * I)/N) * k) * *(B_dft + k);
         
         comb_dft[k] = p + q;
         
         comb_dft[k + N/2] = p - q;
     }          
+
 
     
     return comb_dft;   
